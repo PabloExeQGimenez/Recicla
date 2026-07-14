@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "SolicitudPagoStatus" RENAME VALUE 'PENDING' TO 'PAYMENT_REQUESTED';

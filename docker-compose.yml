@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: recicla
+      POSTGRES_USER: recicla_admin
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-recicla_secret}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U recicla_admin -d recicla"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build: ./recicla-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://recicla_admin:${POSTGRES_PASSWORD:-recicla_secret}@postgres:5432/recicla
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7200}
+      PORT: 3000
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@recicla.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+
+  frontend:
+    build:
+      context: ./recicla-frontend
+      args:
+        VITE_API_URL: /api
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

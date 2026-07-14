@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  OPERADOR
+}
+
+model User {
+  id String @id @default(uuid())
+
+  name     String
+  lastName String
+  dni      String?  @unique
+  email    String   @unique
+  password String
+  role     Role     @default(OPERADOR)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Recuperador {
+  id String @id @default(uuid())
+
+  name      String
+  lastName  String
+  dni       String?   @unique
+  cuil      String?   @unique
+  birthdate DateTime?
+  address   String?
+  phone     String?
+  email     String?
+  account   String?
+  route     String?
+  program   String?
+
+  active Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pesajes Pesaje[]
+}
+
+model Material {
+  id String @id @default(uuid())
+
+  name         String  @unique
+  currentPrice Decimal @db.Decimal(10, 2)
+  active       Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pesajeItems PesajeItem[]
+}
+
+enum PesajeStatus {
+  PENDING
+  PAYMENT_REQUESTED
+  PAID
+}
+
+model Pesaje {
+  id              String  @id @default(uuid())
+  recuperadorId   String
+  solicitudPagoId String?
+
+  status    PesajeStatus
+  date      DateTime
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  items       PesajeItem[]
+  recuperador Recuperador  @relation(fields: [recuperadorId], references: [id])
+
+  solicitudPago SolicitudPago? @relation(fields: [solicitudPagoId], references: [id])
+}
+
+model PesajeItem {
+  id String @id @default(uuid())
+
+  pesajeId           String
+  materialId         String
+  weight             Decimal @db.Decimal(10, 2)
+  pricePerKgAtMoment Decimal @db.Decimal(10, 2)
+
+  pesaje Pesaje @relation(fields: [pesajeId], references: [id], onDelete: Cascade)
+
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+}
+
+enum SolicitudPagoStatus {
+  PAYMENT_REQUESTED
+  PAID
+}
+
+model SolicitudPago {
+  id String @id @default(uuid())
+
+  from   DateTime
+  to     DateTime
+  status SolicitudPagoStatus @default(PAYMENT_REQUESTED)
+
+  createdAt DateTime @default(now())
+
+  pesajes Pesaje[]
+}
