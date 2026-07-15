@@ -8,6 +8,8 @@ COPY apps/api/package.json apps/api/
 RUN npm ci
 
 COPY packages/shared packages/shared
+RUN cd packages/shared && npm run build
+
 COPY apps/api/prisma apps/api/prisma/
 RUN cd apps/api && npx prisma generate
 
