@@ -2,6 +2,7 @@ services:
   - type: web
     name: recicla-api
     runtime: docker
+    plan: free
     dockerfilePath: ./apps/api/Dockerfile
     dockerContext: .
     preDeployCommand: cd apps/api && npx prisma migrate deploy
@@ -26,6 +27,7 @@ services:
   - type: web
     name: recicla-frontend
     runtime: static
+    plan: free
     buildCommand: npm run build -w apps/frontend
     staticPublishPath: ./apps/frontend/dist
     routes:
