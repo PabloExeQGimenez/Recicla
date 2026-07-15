@@ -33,4 +33,4 @@ COPY apps/api/prisma apps/api/prisma/
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "cd apps/api && node dist/src/main"]
+CMD ["sh", "-c", "cd apps/api && npx prisma migrate deploy && node dist/src/main"]
