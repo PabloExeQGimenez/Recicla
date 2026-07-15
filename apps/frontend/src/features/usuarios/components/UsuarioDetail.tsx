@@ -9,7 +9,7 @@ import InfoRow from "../../../shared/UI/InfoRow";
 import { StatusBadge } from "../../../shared/UI";
 import { ConfirmDialog } from "../../../shared/UI/ConfirmDialog";
 import { formatDate, safe } from "../../../shared/utils/formatters";
-import { FaUser, FaShieldHalved, FaDatabase, FaTrash, FaKey } from "react-icons/fa6";
+import { FaUser, FaShieldHalved, FaDatabase, FaTrash, FaPen, FaCheck, FaXmark } from "react-icons/fa6";
 import {
   Header,
   Profile,
@@ -24,6 +24,9 @@ import {
   ErrorBanner,
   ChipGrid,
   PermissionChip,
+  FieldAction,
+  InlineInput,
+  InlineActions,
   ModalBackdrop,
   ModalContainer,
   ModalTitle,
@@ -77,7 +80,7 @@ const ROLE_PERMISSIONS: Record<string, { label: string; allowed: boolean }[]> = 
 
 const UsuarioDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { loading, error, data } = useUsuario(id);
+  const { loading, error, data, refetch } = useUsuario(id);
   const navigate = useNavigate();
   const { user } = useAuth();
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -89,6 +92,11 @@ const UsuarioDetail = () => {
   const [resetting, setResetting] = useState(false);
   const [resetError, setResetError] = useState<string | null>(null);
   const [resetSuccess, setResetSuccess] = useState(false);
+
+  const [editingEmail, setEditingEmail] = useState(false);
+  const [emailValue, setEmailValue] = useState("");
+  const [savingEmail, setSavingEmail] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const handleConfirmDelete = async () => {
     if (!data?.id) return;
@@ -135,6 +143,34 @@ const UsuarioDetail = () => {
     setResetSuccess(false);
   };
 
+  const handleStartEditEmail = () => {
+    setEmailValue(data?.email ?? "");
+    setEmailError(null);
+    setEditingEmail(true);
+  };
+
+  const handleCancelEditEmail = () => {
+    setEditingEmail(false);
+    setEmailValue("");
+    setEmailError(null);
+  };
+
+  const handleSaveEmail = async () => {
+    if (!data?.id || !emailValue.trim()) return;
+    setSavingEmail(true);
+    setEmailError(null);
+    try {
+      await usuariosService.updateEmail(data.id, emailValue.trim());
+      setEditingEmail(false);
+      refetch();
+    } catch (err) {
+      if (err instanceof Error) setEmailError(err.message);
+      else setEmailError("No se pudo actualizar el email");
+    } finally {
+      setSavingEmail(false);
+    }
+  };
+
   if (!data && !loading && !error) {
     return <p>No se encontró el usuario</p>;
   }
@@ -143,6 +179,8 @@ const UsuarioDetail = () => {
   if (error) return <p>{error}</p>;
   if (!data) return <p>No se encontró el usuario</p>;
 
+  const isAdmin = user?.role === "ADMIN";
+  const isOtherUser = user?.id !== data.id;
   const permissions = ROLE_PERMISSIONS[data.role] ?? [];
   const allowedCount = permissions.filter((p) => p.allowed).length;
 
@@ -173,16 +211,7 @@ const UsuarioDetail = () => {
             Volver
           </ActionGhost>
 
-          {user?.id !== data.id && (
-            <ActionSolid
-              type="button"
-              onClick={() => setResetOpen(true)}
-            >
-              <FaKey size={13} /> Restablecer contraseña
-            </ActionSolid>
-          )}
-
-          {user?.id !== data.id && (
+          {isAdmin && isOtherUser && (
             <ActionSolid
               type="button"
               $danger
@@ -205,7 +234,59 @@ const UsuarioDetail = () => {
           <InfoRow label="Nombre" value={safe(data.name)} />
           <InfoRow label="Apellido" value={safe(data.lastName)} />
           <InfoRow label="DNI" value={safe(data.dni)} />
-          <InfoRow label="Email" value={safe(data.email)} />
+
+          {editingEmail ? (
+            <InfoRow
+              label="Email"
+              value={
+                <InlineActions>
+                  <InlineInput
+                    type="email"
+                    value={emailValue}
+                    onChange={(e) => setEmailValue(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleSaveEmail();
+                      if (e.key === "Escape") handleCancelEditEmail();
+                    }}
+                    disabled={savingEmail}
+                    autoFocus
+                  />
+                  <FieldAction onClick={handleSaveEmail} disabled={savingEmail}>
+                    <FaCheck size={12} />
+                  </FieldAction>
+                  <FieldAction onClick={handleCancelEditEmail} disabled={savingEmail}>
+                    <FaXmark size={12} />
+                  </FieldAction>
+                </InlineActions>
+              }
+            />
+          ) : (
+            <InfoRow
+              label="Email"
+              value={safe(data.email)}
+              actions={
+                isAdmin ? (
+                  <FieldAction onClick={handleStartEditEmail}>
+                    <FaPen size={10} /> Editar
+                  </FieldAction>
+                ) : undefined
+              }
+            />
+          )}
+
+          {emailError && <ErrorBanner>{emailError}</ErrorBanner>}
+
+          <InfoRow
+            label="Contraseña"
+            value="••••••••"
+            actions={
+              isAdmin && isOtherUser ? (
+                <FieldAction onClick={() => setResetOpen(true)}>
+                  <FaPen size={10} /> Cambiar contraseña
+                </FieldAction>
+              ) : undefined
+            }
+          />
         </InfoCard>
 
         <InfoCard
@@ -247,7 +328,7 @@ const UsuarioDetail = () => {
       {resetOpen && (
         <ModalBackdrop $isOpen={resetOpen} onClick={handleCloseResetModal}>
           <ModalContainer $isOpen={resetOpen} onClick={(e) => e.stopPropagation()}>
-            <ModalTitle>Restablecer contraseña</ModalTitle>
+            <ModalTitle>Cambiar contraseña</ModalTitle>
             <ModalMessage>
               Ingresá la nueva contraseña para <strong>{safe(data.name)} {safe(data.lastName)}</strong>
             </ModalMessage>

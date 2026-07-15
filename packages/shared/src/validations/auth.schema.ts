@@ -23,3 +23,9 @@ export const resetPasswordSchema = z.object({
 });
 
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
+
+export const updateUserSchema = z.object({
+  email: z.string().email('Email inválido'),
+});
+
+export type UpdateUserSchema = z.infer<typeof updateUserSchema>;

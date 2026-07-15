@@ -110,6 +110,43 @@ export const ActionSolid = styled.button<{ $danger?: boolean }>`
   }
 `;
 
+export const FieldAction = styled.button`
+  border: none;
+  background: none;
+  color: ${({ theme }) => theme.colors.brand.accent};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: ${({ theme }) => theme.radius.sm};
+  transition: ${({ theme }) => theme.motion.normal};
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(37, 99, 235, 0.08);
+  }
+`;
+
+export const InlineInput = styled.input`
+  width: 100%;
+  padding: 4px 8px;
+  border-radius: ${({ theme }) => theme.radius.sm};
+  border: 1px solid ${({ theme }) => theme.colors.brand.accent};
+  background: ${({ theme }) => theme.colors.surface.card};
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+`;
+
+export const InlineActions = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+`;
+
 export const ErrorBanner = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing(1.5)};
   padding: ${({ theme }) => theme.spacing(1.25)};

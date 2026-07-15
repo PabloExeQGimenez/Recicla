@@ -239,4 +239,48 @@ export class AuthService {
 
     return { message: 'Contraseña restablecida correctamente' };
   }
+
+  async updateEmail(
+    id: string,
+    newEmail: string,
+    currentUser: { id: string; role: string },
+  ) {
+    if (currentUser.role !== 'ADMIN') {
+      throw new UnauthorizedException(
+        'No tenés permiso para modificar usuarios',
+      );
+    }
+
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    if (user.email !== newEmail) {
+      const existingEmail = await this.prisma.user.findUnique({
+        where: { email: newEmail },
+      });
+
+      if (existingEmail) {
+        throw new ConflictException('El email ya está registrado');
+      }
+    }
+
+    const updated = await this.prisma.user.update({
+      where: { id },
+      data: { email: newEmail },
+      select: {
+        id: true,
+        name: true,
+        lastName: true,
+        dni: true,
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+    });
+
+    return updated;
+  }
 }

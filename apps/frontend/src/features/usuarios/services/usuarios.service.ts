@@ -44,4 +44,11 @@ export const usuariosService = {
       body: JSON.stringify({ password }),
     });
   },
+
+  async updateEmail(id: string, email: string): Promise<Usuario> {
+    return apiFetch<Usuario>(`/auth/users/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ email }),
+    });
+  },
 };

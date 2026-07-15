@@ -18,6 +18,8 @@ import {
   type RegisterDTO,
   resetPasswordSchema,
   type ResetPasswordDTO,
+  updateUserSchema,
+  type UpdateUserDTO,
 } from './dto/auth.dto';
 import { JwtAuthGuard } from '../infrastructure/guards/jwt-auth.guard';
 import { RolesGuard } from '../infrastructure/guards/roles.guard';
@@ -96,5 +98,17 @@ export class AuthController {
     @Request() req: { user: { id: string; role: string } },
   ) {
     return this.authService.resetPassword(id, body.password, req.user);
+  }
+
+  @Patch('users/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN')
+  async updateEmail(
+    @Param('id') id: string,
+    @Body(new ZodValidationPipe(updateUserSchema))
+    body: UpdateUserDTO,
+    @Request() req: { user: { id: string; role: string } },
+  ) {
+    return this.authService.updateEmail(id, body.email, req.user);
   }
 }
