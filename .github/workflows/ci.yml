@@ -16,6 +16,9 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npx prisma generate
+        working-directory: apps/api
+      - run: npm run build -w packages/shared
       - run: npm run lint
       - run: npm run build
 
