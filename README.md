@@ -1,78 +1,179 @@
 # ♻️ Recicla ![CI](https://github.com/PabloExeQGimenez/recicla/actions/workflows/ci.yml/badge.svg)
 
-Sistema web para la gestión de una cooperativa de reciclado. Permite administrar recuperadores, materiales, pesajes y solicitudes de pago de forma integral.
+Aplicación **Full Stack** para la gestión integral de cooperativas de reciclaje, desarrollada con **React, NestJS, Prisma y PostgreSQL**.
+
+Permite administrar recuperadores, materiales, pesajes y solicitudes de pago mediante una arquitectura escalable basada en **Clean Architecture**, con despliegue en Docker y CI/CD mediante GitHub Actions.
+
+---
 
 ## 🚀 Demo
 
 | Servicio | URL |
-|---|---|
-| Frontend | [recicla-frontend.onrender.com](https://recicla-frontend.onrender.com) |
-| API | [recicla-api.onrender.com](https://recicla-api.onrender.com) |
-| Swagger | [recicla-api.onrender.com/api/docs](https://recicla-api.onrender.com/api/docs) |
+|----------|-----|
+| 🌐 Frontend | https://recicla-frontend.onrender.com |
+| 🔌 API | https://recicla-api.onrender.com |
+| 📖 Swagger | https://recicla-api.onrender.com/api/docs |
 
-> Credenciales de prueba: `admin@recicla.com` / `admin123`
+> **Credenciales de prueba**
+>
+> **Email:** `admin@recicla.com`
+>
+> **Contraseña:** `admin123`
 
-## 📦 Tech Stack
+---
+
+## 📸 Capturas
+
+> _Próximamente..._
+
+---
+
+## ✨ Funcionalidades
+
+- 🔐 Autenticación mediante JWT.
+- 👥 Gestión de recuperadores.
+- ♻️ Gestión de materiales.
+- ⚖️ Registro y administración de pesajes.
+- 💰 Solicitudes de pago.
+- 📖 Documentación interactiva con Swagger.
+- 🔄 Validaciones compartidas entre frontend y backend mediante Zod.
+- 🐳 Contenedorización con Docker.
+- 🚀 Despliegue en Render.
+- ⚙️ Integración continua mediante GitHub Actions.
+
+---
+
+## ⭐ Highlights
+
+- Arquitectura basada en **Clean Architecture**.
+- Monorepo utilizando **npm Workspaces**.
+- API REST desarrollada con **NestJS**.
+- ORM **Prisma** sobre PostgreSQL.
+- Tipos y validaciones compartidas mediante **Zod**.
+- Autenticación segura con **JWT**.
+- Pipeline de **CI/CD** automatizado.
+- Despliegue completo mediante **Docker** y **Render**.
+
+---
+
+## 🛠️ Tech Stack
 
 | Capa | Tecnologías |
-|---|---|
-| Backend | NestJS, Prisma, PostgreSQL, Zod, JWT, Passport |
-| Frontend | React 19, TypeScript, Vite, Styled Components, React Router |
-| Shared | `@recicla/shared` — tipos, enums y schemas Zod compartidos |
-| Deploy | Docker, Docker Compose, Render |
+|------|-------------|
+| **Backend** | NestJS · Prisma ORM · PostgreSQL · JWT · Passport · Zod |
+| **Frontend** | React 19 · TypeScript · Vite · Styled Components · React Router |
+| **Shared** | Tipos y validaciones compartidas entre frontend y backend |
+| **DevOps** | Docker · Docker Compose · Render · GitHub Actions |
+
+---
 
 ## 🏗️ Arquitectura
 
-Proyecto **monorepo** con npm workspaces siguiendo principios de **Clean Architecture**:
+Proyecto organizado como **Monorepo** utilizando **npm Workspaces**, siguiendo principios de **Clean Architecture**.
 
-- **Backend:** domain → application (use cases) → infrastructure (Prisma) → presentation (controllers)
-- **Frontend:** pages → hooks → services → API
-- **Shared:** tipos y validaciones consumidos por ambos lados
+### Backend
+
+```
+Domain
+    ↓
+Application (Use Cases)
+    ↓
+Infrastructure (Prisma)
+    ↓
+Presentation (Controllers)
+```
+
+### Frontend
+
+```
+Pages
+    ↓
+Hooks
+    ↓
+Services
+    ↓
+API
+```
+
+### Shared
+
+```
+Frontend
+      ↘
+    Shared
+      ↗
+Backend
+```
+
+El paquete **Shared** centraliza los tipos y validaciones utilizados por ambas aplicaciones, evitando duplicación de código y garantizando consistencia entre frontend y backend.
+
+---
 
 ## 📂 Estructura del proyecto
 
-```
+```text
 recicla/
 ├── apps/
-│   ├── api/              Backend (NestJS + Prisma)
-│   └── frontend/         Frontend (React + Vite)
+│   ├── api/              # Backend (NestJS + Prisma)
+│   └── frontend/         # Frontend (React + Vite)
+│
 ├── packages/
-│   └── shared/           Tipos y validaciones compartidas
+│   └── shared/           # Tipos y validaciones compartidas
+│
 ├── docker-compose.yml
 ├── render.yaml
 └── package.json
 ```
 
+---
+
 ## 🔧 Prerrequisitos
 
-- Node.js >= 18
-- npm >= 9
-- Docker y Docker Compose (opcional, para levantar con containers)
+- Node.js 18+
+- npm 9+
+- Docker y Docker Compose (opcional)
 
-## ▶️ Instalación y ejecución
+---
 
-**Con Docker (recomendado):**
+## ▶️ Instalación
+
+### Con Docker (recomendado)
 
 ```bash
 git clone git@github.com:PabloExeQGimenez/recicla.git
+
 cd recicla
+
 docker compose up --build
 ```
 
-- Frontend: `http://localhost`
-- API: `http://localhost:3000`
-- Swagger: `http://localhost:3000/api/docs`
+### Servicios disponibles
 
-**Sin Docker:**
+| Servicio | URL |
+|----------|-----|
+| 🌐 Frontend | http://localhost |
+| 🔌 API | http://localhost:3000 |
+| 📖 Swagger | http://localhost:3000/api/docs |
+
+---
+
+### Sin Docker
 
 ```bash
 git clone git@github.com:PabloExeQGimenez/recicla.git
+
 cd recicla
+
 npm install
+
 cp apps/api/.env.example apps/api/.env
-# Completar las variables de entorno en apps/api/.env
+
+# Configurar variables de entorno
+
 npm run dev
 ```
+
+---
 
 ## 🧪 Tests
 
@@ -84,22 +185,49 @@ npm run test -w apps/api
 npm run test -w apps/frontend
 ```
 
-## 🚢 Deploy
+---
 
-Desplegado en [Render](https://render.com) usando `render.yaml` como blueprint:
+## 🚀 Deploy
 
-- **API:** Dockerfile multi-stage → Node 22 Alpine → Prisma migrate + seed al arranque
-- **Frontend:** Build estático servido con Nginx
-- **Base de datos:** PostgreSQL managed en Render (plan free)
+La aplicación se encuentra desplegada en **Render** utilizando un **Blueprint (`render.yaml`)**.
+
+Infraestructura:
+
+- 🌐 Frontend servido como sitio estático.
+- 🔌 API desplegada mediante Docker.
+- 🗄️ Base de datos PostgreSQL administrada por Render.
+
+---
 
 ## ⚙️ CI/CD
 
-Pipeline de [GitHub Actions](.github/workflows/ci.yml) que se ejecuta en cada PR y push a `main`:
+Pipeline automatizado mediante **GitHub Actions**, ejecutado en cada **push** y **Pull Request** hacia `main`.
 
-- **quality** — lint y build del monorepo
-- **test-frontend** — tests del frontend con Vitest
-- **test-api** — tests del backend con Jest + PostgreSQL
+Incluye:
+
+- ✅ Lint
+- ✅ Build del monorepo
+- ✅ Tests del frontend (Vitest)
+- ✅ Tests del backend (Jest + PostgreSQL)
+
+---
+
+## 🗺️ Roadmap
+
+Próximas mejoras planificadas:
+
+- Refresh Tokens.
+- Dashboard analítico.
+- Auditoría de acciones.
+- Tests End-to-End.
+- Monitoreo y métricas.
+- Notificaciones por correo electrónico.
+
+---
 
 ## 👨‍💻 Autor
 
-**Pablo Exequiel Giménez** — [GitHub](https://github.com/PabloExeQGimenez)
+**Pablo Exequiel Giménez**
+
+- GitHub: https://github.com/PabloExeQGimenez
+- LinkedIn: https://www.linkedin.com/in/pabloexeqgimenez/
