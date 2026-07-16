@@ -43,6 +43,12 @@ export const theme = {
       warning: "#F59E0B",
       info: "#2563EB",
     },
+
+    // Aliases para compatibilidad con componentes existentes
+    primary: "#16A34A",
+    secondary: "#17315F",
+    white: "#FFFFFF",
+    bg: "#F1F5F9",
   },
 
   // Tipografía
@@ -53,6 +59,7 @@ export const theme = {
     lg: "1.125rem", // 18
     xl: "1.25rem", // 20
     "2xl": "1.5rem", // 24
+    large: "1.125rem", // alias para lg
   },
 
   fontWeights: {

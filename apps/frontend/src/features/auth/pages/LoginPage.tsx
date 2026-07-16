@@ -107,7 +107,7 @@ const Shell = styled.div`
   display: grid;
   place-items: center;
   padding: 24px;
-  background: ${({ theme }) => theme.colors.bg?.app ?? "#f6f7fb"};
+  background: ${({ theme }) => theme.colors.surface?.app ?? "#f6f7fb"};
 `;
 
 const Card = styled.div`

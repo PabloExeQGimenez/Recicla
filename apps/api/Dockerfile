@@ -24,12 +24,12 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 COPY packages/shared/package.json packages/shared/
 COPY apps/api/package.json apps/api/
-RUN npm ci --omit=dev
+RUN npm ci
 
 COPY --from=build /app/apps/api/dist ./apps/api/dist
 COPY --from=build /app/packages/shared/dist ./packages/shared/dist
-COPY --from=build /app/apps/api/node_modules/.prisma ./apps/api/node_modules/.prisma
-COPY --from=build /app/apps/api/node_modules/@prisma ./apps/api/node_modules/@prisma
+COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=build /app/apps/api/prisma/seed.js ./apps/api/prisma/seed.js
 COPY apps/api/prisma apps/api/prisma/
 

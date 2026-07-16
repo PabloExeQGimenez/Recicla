@@ -31,7 +31,7 @@ const variantStyles: Record<BadgeVariant, ReturnType<typeof css>> = {
   neutral: css`
     color: ${({ theme }) => theme.colors.text.secondary};
     background: ${({ theme }) =>
-      theme.colors.bg?.muted ?? "rgba(0,0,0,0.06)"};
+      theme.colors.text?.muted ?? "rgba(0,0,0,0.06)"};
     border-color: transparent;
   `,
 };
