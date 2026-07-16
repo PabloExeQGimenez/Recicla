@@ -77,7 +77,7 @@ describe('MaterialFormModal', () => {
     fireEvent.submit(form)
 
     await waitFor(() => {
-      expect(screen.getByText(/nombre es obligatorio/i)).toBeInTheDocument()
+      expect(screen.getByText(/nombre.*no puede estar vacío/i)).toBeInTheDocument()
     })
   })
 })

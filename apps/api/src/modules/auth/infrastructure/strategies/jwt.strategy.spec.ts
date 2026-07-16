@@ -24,29 +24,27 @@ describe('JwtStrategy', () => {
     });
   });
 
-  it('debería lanzar UnauthorizedException si falta sub', async () => {
+  it('debería lanzar UnauthorizedException si falta sub', () => {
     const payload = { email: 'test@test.com', role: 'ADMIN' };
 
-    await expect(strategy.validate(payload as any)).rejects.toThrow(
+    expect(() => strategy.validate(payload as any)).toThrow(
       UnauthorizedException,
     );
-    await expect(strategy.validate(payload as any)).rejects.toThrow(
-      'Token inválido',
-    );
+    expect(() => strategy.validate(payload as any)).toThrow('Token inválido');
   });
 
-  it('debería lanzar UnauthorizedException si falta email', async () => {
+  it('debería lanzar UnauthorizedException si falta email', () => {
     const payload = { sub: 'u-1', role: 'ADMIN' };
 
-    await expect(strategy.validate(payload as any)).rejects.toThrow(
+    expect(() => strategy.validate(payload as any)).toThrow(
       UnauthorizedException,
     );
   });
 
-  it('debería lanzar UnauthorizedException si falta role', async () => {
+  it('debería lanzar UnauthorizedException si falta role', () => {
     const payload = { sub: 'u-1', email: 'test@test.com' };
 
-    await expect(strategy.validate(payload as any)).rejects.toThrow(
+    expect(() => strategy.validate(payload as any)).toThrow(
       UnauthorizedException,
     );
   });
