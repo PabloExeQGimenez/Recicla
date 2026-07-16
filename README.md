@@ -22,12 +22,6 @@ Permite administrar recuperadores, materiales, pesajes y solicitudes de pago med
 
 ---
 
-## 📸 Capturas
-
-> _Próximamente..._
-
----
-
 ## ✨ Funcionalidades
 
 - 🔐 Autenticación mediante JWT.
