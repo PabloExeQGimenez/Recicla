@@ -10,6 +10,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/infrastructure/guards/jwt-auth.guard';
 import { RolesGuard } from './modules/auth/infrastructure/guards/roles.guard';
 import { ConfigModule } from '@nestjs/config';
+import { validate } from './config/env.validation';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ConfigModule } from '@nestjs/config';
     DashboardModule,
     ConfigModule.forRoot({
       isGlobal: true,
+      validate,
     }),
   ],
   controllers: [],
