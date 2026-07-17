@@ -54,7 +54,7 @@ describe('LoginPage', () => {
   })
 
   it('calls login with email and password', async () => {
-    mockLogin.mockResolvedValue({ token: 'abc', user: { id: '1', name: 'Admin', lastName: '', dni: null, email: 'admin@demo.com', role: 'ADMIN' } })
+    mockLogin.mockResolvedValue({ token: 'abc', user: { id: '1', name: 'Admin', lastName: '', dni: null, email: 'admin@recicla.com', role: 'ADMIN' } })
 
     const { container } = renderLogin()
 
@@ -62,7 +62,7 @@ describe('LoginPage', () => {
     fireEvent.submit(form)
 
     await waitFor(() => {
-      expect(mockLogin).toHaveBeenCalledWith('admin@demo.com', '')
+      expect(mockLogin).toHaveBeenCalledWith('admin@recicla.com', 'admin123')
     })
   })
 })
