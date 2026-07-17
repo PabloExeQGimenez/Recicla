@@ -11,7 +11,7 @@ export class PrismaDashboardRepository implements DashboardRepository {
   async getCurrentMonthData(from: Date, to: Date): Promise<DashboardData> {
     const recoverers = await this.prisma.pesaje.findMany({
       where: {
-        createdAt: {
+        date: {
           gte: from,
           lte: to,
         },
@@ -26,7 +26,7 @@ export class PrismaDashboardRepository implements DashboardRepository {
     const totalKg = await this.prisma.pesajeItem.aggregate({
       where: {
         pesaje: {
-          createdAt: {
+          date: {
             gte: from,
             lte: to,
           },
@@ -44,7 +44,7 @@ export class PrismaDashboardRepository implements DashboardRepository {
           status: {
             not: 'PAID',
           },
-          createdAt: {
+          date: {
             gte: from,
             lte: to,
           },
@@ -105,7 +105,7 @@ export class PrismaDashboardRepository implements DashboardRepository {
       by: ['materialId'],
       where: {
         pesaje: {
-          createdAt: {
+          date: {
             gte: from,
             lte: to,
           },

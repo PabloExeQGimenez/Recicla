@@ -19,7 +19,7 @@ import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
     ThrottlerModule.forRoot([
       {
         ttl: seconds(60),
-        limit: 10,
+        limit: 30,
       },
     ]),
     PrismaModule,
