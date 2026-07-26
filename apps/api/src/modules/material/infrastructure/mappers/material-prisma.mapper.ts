@@ -1,12 +1,13 @@
 import { Material as PrismaMaterial, Prisma } from '@prisma/client';
 import { Material } from '../../domain/material.entity';
+import { MaterialPrice } from '../../domain/material-price.vo';
 
 export class MaterialPrismaMapper {
   static toDomain(material: PrismaMaterial): Material {
-    return new Material({
+    return Material.reconstitute({
       id: material.id,
       name: material.name,
-      currentPrice: material.currentPrice.toNumber(),
+      currentPrice: MaterialPrice.create(material.currentPrice.toNumber()),
       active: material.active,
       createdAt: material.createdAt,
       updatedAt: material.updatedAt,
@@ -17,7 +18,7 @@ export class MaterialPrismaMapper {
     return {
       id: material.id,
       name: material.name,
-      currentPrice: new Prisma.Decimal(material.currentPrice),
+      currentPrice: new Prisma.Decimal(material.currentPrice.value),
       active: material.active,
       createdAt: material.createdAt,
       updatedAt: material.updatedAt,

@@ -7,6 +7,7 @@ import { ChangeMaterialPriceUseCase } from '../application/change-material-price
 import { ActivateMaterialUseCase } from '../application/activate-material.usecase';
 import { DeactivateMaterialUseCase } from '../application/deactivate-material.usecase';
 import { Material } from '../domain/material.entity';
+import { MaterialPrice } from '../domain/material-price.vo';
 
 describe('MaterialController', () => {
   let controller: MaterialController;
@@ -17,10 +18,10 @@ describe('MaterialController', () => {
   let mockActivate: jest.Mocked<ActivateMaterialUseCase>;
   let mockDeactivate: jest.Mocked<DeactivateMaterialUseCase>;
 
-  const material = new Material({
+  const material = Material.reconstitute({
     id: 'm-1',
     name: 'Cartón',
-    currentPrice: 2,
+    currentPrice: MaterialPrice.create(2),
     active: true,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -95,10 +96,10 @@ describe('MaterialController', () => {
 
   describe('changePrice', () => {
     it('debería cambiar el precio del material', async () => {
-      const updated = new Material({
+      const updated = Material.reconstitute({
         id: 'm-1',
         name: 'Cartón',
-        currentPrice: 5,
+        currentPrice: MaterialPrice.create(5),
         active: true,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -116,10 +117,10 @@ describe('MaterialController', () => {
 
   describe('activate', () => {
     it('debería activar el material', async () => {
-      const activated = new Material({
+      const activated = Material.reconstitute({
         id: 'm-1',
         name: 'Cartón',
-        currentPrice: 2,
+        currentPrice: MaterialPrice.create(2),
         active: true,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -134,10 +135,10 @@ describe('MaterialController', () => {
 
   describe('deactivate', () => {
     it('debería desactivar el material', async () => {
-      const deactivated = new Material({
+      const deactivated = Material.reconstitute({
         id: 'm-1',
         name: 'Cartón',
-        currentPrice: 2,
+        currentPrice: MaterialPrice.create(2),
         active: false,
         createdAt: new Date(),
         updatedAt: new Date(),

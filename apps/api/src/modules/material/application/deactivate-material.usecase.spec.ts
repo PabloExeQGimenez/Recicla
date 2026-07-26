@@ -1,6 +1,7 @@
 import { DeactivateMaterialUseCase } from './deactivate-material.usecase';
 import { MaterialRepository } from '../domain/material.repository';
 import { Material } from '../domain/material.entity';
+import { MaterialPrice } from '../domain/material-price.vo';
 import { NotFoundException } from '@nestjs/common';
 
 describe('DeactivateMaterialUseCase', () => {
@@ -19,10 +20,10 @@ describe('DeactivateMaterialUseCase', () => {
   });
 
   it('debería desactivar el material y guardarlo', async () => {
-    const material = new Material({
+    const material = Material.reconstitute({
       id: 'm-1',
       name: 'Cartón',
-      currentPrice: 2,
+      currentPrice: MaterialPrice.create(2),
       active: true,
       createdAt: new Date(),
       updatedAt: new Date(),

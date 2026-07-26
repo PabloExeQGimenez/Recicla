@@ -1,6 +1,7 @@
 import { ChangeMaterialPriceUseCase } from './change-material-price.usecase';
 import { MaterialRepository } from '../domain/material.repository';
 import { Material } from '../domain/material.entity';
+import { MaterialPrice } from '../domain/material-price.vo';
 import { NotFoundException } from '@nestjs/common';
 
 describe('ChangeMaterialPriceUseCase', () => {
@@ -21,10 +22,10 @@ describe('ChangeMaterialPriceUseCase', () => {
   });
 
   it('debería actualizar el precio y guardar', async () => {
-    const material = new Material({
+    const material = Material.reconstitute({
       id: 'm-1',
       name: 'Cartón',
-      currentPrice: 2,
+      currentPrice: MaterialPrice.create(2),
       active: true,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -35,7 +36,7 @@ describe('ChangeMaterialPriceUseCase', () => {
 
     const result = await useCase.execute('m-1', { currentPrice: 5 });
 
-    expect(result.currentPrice).toBe(5);
+    expect(result.currentPrice.value).toBe(5);
     expect(mockRepository.update).toHaveBeenCalledWith(material);
   });
 });

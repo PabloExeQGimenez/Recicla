@@ -1,9 +1,15 @@
 import { ExportPesajesPdfUseCase } from './export-pesajes-pdf.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeRepository } from '../domain/pesaje.repository';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PdfExporter } from '../domain/pdf-exporter';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { Pesaje } from '../domain/pesaje.entity';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeStatus } from '../domain/pesaje-status.enum';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeItem } from '../domain/pesaje-item.vo';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 
 describe('ExportPesajesPdfUseCase', () => {
   let useCase: ExportPesajesPdfUseCase;
@@ -25,7 +31,7 @@ describe('ExportPesajesPdfUseCase', () => {
         new PesajeItem({
           materialId: 'mat-1',
           weight: 10,
-          pricePerKgAtMoment: 2,
+          pricePerKgAtMoment: MaterialPrice.create(2),
           material: { id: 'mat-1', name: 'Plástico' },
         }),
       ],

@@ -1,5 +1,6 @@
 import { Injectable, Inject, ConflictException, Logger } from '@nestjs/common';
 import { Material } from '../domain/material.entity';
+import { MaterialPrice } from '../domain/material-price.vo';
 import {
   MATERIAL_REPOSITORY,
   type MaterialRepository,
@@ -21,19 +22,15 @@ export class CreateMaterialUseCase {
       throw new ConflictException('Ya existe un material con ese nombre');
     }
 
-    const material = new Material({
-      id: crypto.randomUUID(),
+    const material = Material.create({
       name: data.name,
-      currentPrice: data.currentPrice,
-      active: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      currentPrice: MaterialPrice.create(data.currentPrice),
     });
 
     await this.materialRepository.save(material);
 
     this.logger.log(
-      `Material creado: ${data.name} (precio: ${data.currentPrice})`,
+      `Material creado: ${material.name} (precio: ${material.currentPrice.value})`,
     );
 
     return material;

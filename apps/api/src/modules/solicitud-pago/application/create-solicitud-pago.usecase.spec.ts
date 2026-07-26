@@ -1,10 +1,17 @@
 import { CreateSolicitudPagoUseCase } from './create-solicitud-pago.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { SolicitudPagoRepository } from '../domain/solicitud-pago.repository';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeRepository } from '../../pesaje/domain/pesaje.repository';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { Pesaje } from '../../pesaje/domain/pesaje.entity';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeStatus } from '../../pesaje/domain/pesaje-status.enum';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeItem } from '../../pesaje/domain/pesaje-item.vo';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { BadRequestException } from '@nestjs/common';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 
 describe('CreateSolicitudPagoUseCase', () => {
   let useCase: CreateSolicitudPagoUseCase;
@@ -29,7 +36,7 @@ describe('CreateSolicitudPagoUseCase', () => {
         new PesajeItem({
           materialId: 'mat-1',
           weight: 10,
-          pricePerKgAtMoment: 2,
+          pricePerKgAtMoment: MaterialPrice.create(2),
         }),
       ],
       date: new Date('2026-01-15'),

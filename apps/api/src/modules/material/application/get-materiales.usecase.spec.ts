@@ -1,6 +1,7 @@
 import { GetMaterialesUseCase } from './get-materiales.usecase';
 import { MaterialRepository } from '../domain/material.repository';
 import { Material } from '../domain/material.entity';
+import { MaterialPrice } from '../domain/material-price.vo';
 
 describe('GetMaterialesUseCase', () => {
   let useCase: GetMaterialesUseCase;
@@ -13,18 +14,18 @@ describe('GetMaterialesUseCase', () => {
 
   it('debería retornar la lista de materiales', async () => {
     const materials = [
-      new Material({
+      Material.reconstitute({
         id: 'm-1',
         name: 'Cartón',
-        currentPrice: 2,
+        currentPrice: MaterialPrice.create(2),
         active: true,
         createdAt: new Date(),
         updatedAt: new Date(),
       }),
-      new Material({
+      Material.reconstitute({
         id: 'm-2',
         name: 'Plástico',
-        currentPrice: 3,
+        currentPrice: MaterialPrice.create(3),
         active: true,
         createdAt: new Date(),
         updatedAt: new Date(),

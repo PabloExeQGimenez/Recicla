@@ -1,9 +1,15 @@
 import { GetPesajeByIdUseCase } from './get-pesaje-by-id.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeRepository } from '../domain/pesaje.repository';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { Pesaje } from '../domain/pesaje.entity';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeStatus } from '../domain/pesaje-status.enum';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeItem } from '../domain/pesaje-item.vo';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { NotFoundException } from '@nestjs/common';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 
 describe('GetPesajeByIdUseCase', () => {
   let useCase: GetPesajeByIdUseCase;
@@ -30,7 +36,7 @@ describe('GetPesajeByIdUseCase', () => {
         new PesajeItem({
           materialId: 'mat-1',
           weight: 10,
-          pricePerKgAtMoment: 2,
+          pricePerKgAtMoment: MaterialPrice.create(2),
         }),
       ],
       date: new Date(),
