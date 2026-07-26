@@ -26,11 +26,28 @@ describe('Pesaje', () => {
     updatedAt: new Date('2026-01-15'),
   };
 
+  const creationProps = {
+    recuperadorId: 'rec-1',
+    items: [item1],
+    date: new Date('2026-01-15'),
+  };
+
   describe('constructor', () => {
     it('debería crear un pesaje válido', () => {
-      const pesaje = new Pesaje(defaultProps);
+      const pesaje = Pesaje.reconstitute(defaultProps);
 
       expect(pesaje.id).toBe('p-1');
+      expect(pesaje.recuperadorId).toBe('rec-1');
+      expect(pesaje.status).toBe(PesajeStatus.PENDING);
+      expect(pesaje.items).toHaveLength(1);
+    });
+  });
+
+  describe('create', () => {
+    it('debería crear un pesaje con valores por defecto', () => {
+      const pesaje = Pesaje.create(creationProps);
+
+      expect(pesaje.id).toBeDefined();
       expect(pesaje.recuperadorId).toBe('rec-1');
       expect(pesaje.status).toBe(PesajeStatus.PENDING);
       expect(pesaje.items).toHaveLength(1);
@@ -38,27 +55,30 @@ describe('Pesaje', () => {
 
     it('debería lanzar error si no hay recuperador', () => {
       expect(() => {
-        new Pesaje({ ...defaultProps, recuperadorId: '' });
+        Pesaje.create({ ...creationProps, recuperadorId: '' });
       }).toThrow('El recuperador es obligatorio');
     });
 
     it('debería lanzar error si no hay items', () => {
       expect(() => {
-        new Pesaje({ ...defaultProps, items: [] });
+        Pesaje.create({ ...creationProps, items: [] });
       }).toThrow('El pesaje debe contener items');
     });
   });
 
   describe('totalAmount', () => {
     it('debería sumar los subtotales de todos los items', () => {
-      const pesaje = new Pesaje({ ...defaultProps, items: [item1, item2] });
+      const pesaje = Pesaje.reconstitute({
+        ...defaultProps,
+        items: [item1, item2],
+      });
 
       // item1: 10 * 2 = 20, item2: 5 * 3 = 15
       expect(pesaje.totalAmount).toBe(35);
     });
 
     it('debería funcionar con un solo item', () => {
-      const pesaje = new Pesaje(defaultProps);
+      const pesaje = Pesaje.reconstitute({ ...defaultProps });
 
       expect(pesaje.totalAmount).toBe(20);
     });
@@ -66,7 +86,7 @@ describe('Pesaje', () => {
 
   describe('markAsPaymentRequested', () => {
     it('debería cambiar status a PAYMENT_REQUESTED', () => {
-      const pesaje = new Pesaje(defaultProps);
+      const pesaje = Pesaje.reconstitute({ ...defaultProps });
       pesaje.markAsPaymentRequested();
 
       expect(pesaje.status).toBe(PesajeStatus.PAYMENT_REQUESTED);
@@ -75,7 +95,7 @@ describe('Pesaje', () => {
 
   describe('assignToPaymentRequest', () => {
     it('debería asociar solicitud y marcar como PAYMENT_REQUESTED', () => {
-      const pesaje = new Pesaje(defaultProps);
+      const pesaje = Pesaje.reconstitute({ ...defaultProps });
       pesaje.assignToPaymentRequest('sp-1');
 
       expect(pesaje.solicitudPagoId).toBe('sp-1');
@@ -83,7 +103,7 @@ describe('Pesaje', () => {
     });
 
     it('debería lanzar error si el pesaje no está pendiente', () => {
-      const pesaje = new Pesaje({
+      const pesaje = Pesaje.reconstitute({
         ...defaultProps,
         status: PesajeStatus.PAYMENT_REQUESTED,
       });
@@ -98,7 +118,7 @@ describe('Pesaje', () => {
 
   describe('markAsPaid', () => {
     it('debería cambiar status a PAID', () => {
-      const pesaje = new Pesaje({
+      const pesaje = Pesaje.reconstitute({
         ...defaultProps,
         status: PesajeStatus.PAYMENT_REQUESTED,
       });
@@ -108,7 +128,7 @@ describe('Pesaje', () => {
     });
 
     it('debería lanzar error si no está en PAYMENT_REQUESTED', () => {
-      const pesaje = new Pesaje(defaultProps);
+      const pesaje = Pesaje.reconstitute({ ...defaultProps });
 
       expect(() => {
         pesaje.markAsPaid();
@@ -118,13 +138,13 @@ describe('Pesaje', () => {
 
   describe('canBeDeleted', () => {
     it('debería retornar true si está pendiente', () => {
-      const pesaje = new Pesaje(defaultProps);
+      const pesaje = Pesaje.reconstitute({ ...defaultProps });
 
       expect(pesaje.canBeDeleted()).toBe(true);
     });
 
     it('debería retornar false si no está pendiente', () => {
-      const pesaje = new Pesaje({
+      const pesaje = Pesaje.reconstitute({
         ...defaultProps,
         status: PesajeStatus.PAYMENT_REQUESTED,
       });

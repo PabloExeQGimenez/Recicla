@@ -35,7 +35,7 @@ describe('PesajeController', () => {
     exportPdf: jest.Mocked<ExportPesajesPdfUseCase>;
   };
 
-  const pesaje = new Pesaje({
+  const pesaje = Pesaje.reconstitute({
     id: 'p-1',
     recuperadorId: 'rec-1',
     status: PesajeStatus.PENDING,

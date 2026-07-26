@@ -20,7 +20,6 @@ import {
 } from 'src/modules/material/domain/material.repository';
 import { CreatePesajeDTO } from '../presentation/schemas/create-pesaje.schema';
 import { PesajeItem } from '../domain/pesaje-item.vo';
-import { PesajeStatus } from '../domain/pesaje-status.enum';
 import { MaterialPrice } from 'src/modules/material/domain/material-price.vo';
 
 @Injectable()
@@ -62,14 +61,10 @@ export class CreatePesajeUseCase {
         }),
       );
     }
-    const pesaje = new Pesaje({
-      id: crypto.randomUUID(),
+    const pesaje = Pesaje.create({
       recuperadorId: data.recuperadorId,
       items: pesajeItems,
-      status: PesajeStatus.PENDING,
       date: data.date,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
     await this.pesajeRepository.save(pesaje);
 
