@@ -3,7 +3,7 @@ import { Recuperador as PrismaRecuperador } from '@prisma/client';
 
 export class RecuperadorPrismaMapper {
   static toDomain(data: PrismaRecuperador): Recuperador {
-    return new Recuperador({
+    return Recuperador.reconstitute({
       id: data.id,
       name: data.name,
       lastName: data.lastName,

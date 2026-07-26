@@ -13,7 +13,7 @@ describe('CreatePesajeUseCase', () => {
   let mockRecuperadorRepo: jest.Mocked<RecuperadorRepository>;
   let mockMaterialRepo: jest.Mocked<MaterialRepository>;
 
-  const activeRecuperador = new Recuperador({
+  const activeRecuperador = Recuperador.reconstitute({
     id: 'rec-1',
     name: 'Juan',
     lastName: 'Pérez',
@@ -55,7 +55,7 @@ describe('CreatePesajeUseCase', () => {
   });
 
   it('debería lanzar BadRequestException si el recuperador está inactivo', async () => {
-    const inactive = new Recuperador({
+    const inactive = Recuperador.reconstitute({
       id: 'rec-1',
       name: 'Juan',
       lastName: 'Pérez',

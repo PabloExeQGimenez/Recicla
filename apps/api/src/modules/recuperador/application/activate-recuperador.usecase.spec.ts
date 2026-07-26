@@ -19,7 +19,7 @@ describe('ActivateRecuperadorUseCase', () => {
   });
 
   it('debería activar el recuperador y guardarlo', async () => {
-    const recuperador = new Recuperador({
+    const recuperador = Recuperador.reconstitute({
       id: 'rec-1',
       name: 'Juan',
       lastName: 'Pérez',

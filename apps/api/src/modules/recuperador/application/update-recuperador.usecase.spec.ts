@@ -7,7 +7,7 @@ describe('UpdateRecuperadorUseCase', () => {
   let useCase: UpdateRecuperadorUseCase;
   let mockRepository: jest.Mocked<RecuperadorRepository>;
 
-  const existingRecuperador = new Recuperador({
+  const existingRecuperador = Recuperador.reconstitute({
     id: 'rec-1',
     name: 'Juan',
     lastName: 'Pérez',

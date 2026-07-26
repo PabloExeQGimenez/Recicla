@@ -13,7 +13,7 @@ describe('GetRecuperadoresUseCase', () => {
 
   it('debería retornar recuperadores paginados', async () => {
     const recuperadores = [
-      new Recuperador({
+      Recuperador.reconstitute({
         id: 'rec-1',
         name: 'Juan',
         lastName: 'Pérez',
