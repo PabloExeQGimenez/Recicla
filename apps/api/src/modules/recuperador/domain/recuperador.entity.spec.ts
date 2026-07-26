@@ -21,7 +21,7 @@ describe('Recuperador', () => {
 
   describe('constructor', () => {
     it('debería crear un recuperador válido', () => {
-      const recuperador = new Recuperador(defaultProps);
+      const recuperador = Recuperador.reconstitute({ ...defaultProps });
 
       expect(recuperador.id).toBe('rec-1');
       expect(recuperador.name).toBe('Juan');
@@ -32,7 +32,7 @@ describe('Recuperador', () => {
 
   describe('update', () => {
     it('debería actualizar campos provistos', () => {
-      const recuperador = new Recuperador(defaultProps);
+      const recuperador = Recuperador.reconstitute({ ...defaultProps });
       recuperador.update({ name: 'María', email: 'maria@test.com' });
 
       expect(recuperador.name).toBe('María');
@@ -40,7 +40,7 @@ describe('Recuperador', () => {
     });
 
     it('no debería sobreescribir campos no provistos', () => {
-      const recuperador = new Recuperador(defaultProps);
+      const recuperador = Recuperador.reconstitute({ ...defaultProps });
       recuperador.update({ name: 'María' });
 
       expect(recuperador.lastName).toBe('Pérez');
@@ -49,7 +49,7 @@ describe('Recuperador', () => {
     });
 
     it('debería actualizar updatedAt', () => {
-      const recuperador = new Recuperador(defaultProps);
+      const recuperador = Recuperador.reconstitute({ ...defaultProps });
       const antes = recuperador.updatedAt;
 
       recuperador.update({ name: 'María' });
@@ -62,14 +62,14 @@ describe('Recuperador', () => {
 
   describe('activate', () => {
     it('debería activar el recuperador', () => {
-      const recuperador = new Recuperador({ ...defaultProps, active: false });
+      const recuperador = Recuperador.reconstitute({ ...defaultProps, active: false });
       recuperador.activate();
 
       expect(recuperador.active).toBe(true);
     });
 
     it('debería actualizar updatedAt', () => {
-      const recuperador = new Recuperador(defaultProps);
+      const recuperador = Recuperador.reconstitute({ ...defaultProps });
       const antes = recuperador.updatedAt;
 
       recuperador.activate();
@@ -82,14 +82,14 @@ describe('Recuperador', () => {
 
   describe('deactivate', () => {
     it('debería desactivar el recuperador', () => {
-      const recuperador = new Recuperador(defaultProps);
+      const recuperador = Recuperador.reconstitute({ ...defaultProps });
       recuperador.deactivate();
 
       expect(recuperador.active).toBe(false);
     });
 
     it('debería actualizar updatedAt', () => {
-      const recuperador = new Recuperador(defaultProps);
+      const recuperador = Recuperador.reconstitute({ ...defaultProps });
       const antes = recuperador.updatedAt;
 
       recuperador.deactivate();

@@ -22,7 +22,7 @@ describe('GetRecuperadorByIdUseCase', () => {
   });
 
   it('debería retornar el recuperador si existe', async () => {
-    const recuperador = new Recuperador({
+    const recuperador = Recuperador.reconstitute({
       id: 'rec-1',
       name: 'Juan',
       lastName: 'Pérez',

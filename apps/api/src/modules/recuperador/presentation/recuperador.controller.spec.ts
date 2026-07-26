@@ -19,7 +19,7 @@ describe('RecuperadorController', () => {
     deactivate: jest.Mocked<DeactivateRecuperadorUseCase>;
   };
 
-  const recuperador = new Recuperador({
+  const recuperador = Recuperador.reconstitute({
     id: 'rec-1',
     name: 'Juan',
     lastName: 'Pérez',
@@ -99,7 +99,7 @@ describe('RecuperadorController', () => {
 
   describe('update', () => {
     it('debería actualizar el recuperador', async () => {
-      const updated = new Recuperador({
+      const updated = Recuperador.reconstitute({
         id: 'rec-1',
         name: 'María',
         lastName: 'Pérez',
@@ -130,7 +130,7 @@ describe('RecuperadorController', () => {
 
   describe('deactivate', () => {
     it('debería desactivar el recuperador', async () => {
-      const deactivated = new Recuperador({
+      const deactivated = Recuperador.reconstitute({
         id: 'rec-1',
         name: 'Juan',
         lastName: 'Pérez',
