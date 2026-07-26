@@ -1,5 +1,6 @@
 import { Inject, Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { Material } from '../domain/material.entity';
+import { MaterialPrice } from '../domain/material-price.vo';
 import { ChangeMaterialPriceDTO } from '../presentation/schemas/change-material-price.schema';
 import {
   MATERIAL_REPOSITORY,
@@ -21,7 +22,7 @@ export class ChangeMaterialPriceUseCase {
       throw new NotFoundException('El material no existe');
     }
 
-    material.changePrice(data.currentPrice);
+    material.changePrice(MaterialPrice.create(data.currentPrice));
     await this.materialRepository.update(material);
 
     this.logger.log(`Precio cambiado: material ${id} → ${data.currentPrice}`);

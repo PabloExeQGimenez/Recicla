@@ -6,7 +6,7 @@ export class MaterialResponseMapper {
     return {
       id: material.id,
       name: material.name,
-      currentPrice: material.currentPrice,
+      currentPrice: material.currentPrice.value,
       active: material.active,
     };
   }

@@ -1,15 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeController } from './pesaje.controller';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { CreatePesajeUseCase } from '../application/create-pesaje.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { GetPesajeByIdUseCase } from '../application/get-pesaje-by-id.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { GetPesajesUseCase } from '../application/get-pesajes.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { DeletePesajeUseCase } from '../application/delete-pesaje.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { DeletePesajeItemUseCase } from '../application/delete-pesaje-item.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { ExportPesajesExcelUseCase } from '../application/export-pesajes-excel.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { ExportPesajesPdfUseCase } from '../application/export-pesajes-pdf.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { Pesaje } from '../domain/pesaje.entity';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeStatus } from '../domain/pesaje-status.enum';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeItem } from '../domain/pesaje-item.vo';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 
 describe('PesajeController', () => {
   let controller: PesajeController;
@@ -31,7 +43,7 @@ describe('PesajeController', () => {
       new PesajeItem({
         materialId: 'mat-1',
         weight: 10,
-        pricePerKgAtMoment: 2,
+        pricePerKgAtMoment: MaterialPrice.create(2),
       }),
     ],
     date: new Date(),

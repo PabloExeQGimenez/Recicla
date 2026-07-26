@@ -1,3 +1,5 @@
+import { MaterialPrice } from 'src/modules/material/domain/material-price.vo';
+
 export type MaterialRef = {
   id: string;
   name: string;
@@ -7,7 +9,7 @@ export type PesajeItemProps = {
   id?: string;
   materialId: string;
   weight: number;
-  pricePerKgAtMoment: number;
+  pricePerKgAtMoment: MaterialPrice;
   material?: MaterialRef;
 };
 
@@ -23,7 +25,7 @@ export class PesajeItem {
       throw new Error('El peso debe ser mayor a cero');
     }
 
-    if (props.pricePerKgAtMoment <= 0) {
+    if (props.pricePerKgAtMoment.value < 0) {
       throw new Error('El precio debe ser mayor a cero');
     }
 
@@ -34,7 +36,7 @@ export class PesajeItem {
     this.id = props.id;
     this.materialId = props.materialId;
     this.weight = props.weight;
-    this.pricePerKgAtMoment = props.pricePerKgAtMoment;
+    this.pricePerKgAtMoment = props.pricePerKgAtMoment.value;
     this.material = props.material;
   }
 

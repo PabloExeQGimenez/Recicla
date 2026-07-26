@@ -1,9 +1,15 @@
 import { DeletePesajeUseCase } from './delete-pesaje.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeRepository } from '../domain/pesaje.repository';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { Pesaje } from '../domain/pesaje.entity';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeStatus } from '../domain/pesaje-status.enum';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeItem } from '../domain/pesaje-item.vo';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { NotFoundException, BadRequestException } from '@nestjs/common';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 
 describe('DeletePesajeUseCase', () => {
   let useCase: DeletePesajeUseCase;
@@ -34,7 +40,7 @@ describe('DeletePesajeUseCase', () => {
         new PesajeItem({
           materialId: 'mat-1',
           weight: 10,
-          pricePerKgAtMoment: 2,
+          pricePerKgAtMoment: MaterialPrice.create(2),
         }),
       ],
       date: new Date('2026-01-15'),
@@ -59,7 +65,7 @@ describe('DeletePesajeUseCase', () => {
         new PesajeItem({
           materialId: 'mat-1',
           weight: 10,
-          pricePerKgAtMoment: 2,
+          pricePerKgAtMoment: MaterialPrice.create(2),
         }),
       ],
       date: new Date('2026-01-15'),

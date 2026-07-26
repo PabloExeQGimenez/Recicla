@@ -4,6 +4,7 @@ import { ExcelExporter } from '../domain/excel-exporter';
 import { Pesaje } from '../domain/pesaje.entity';
 import { PesajeStatus } from '../domain/pesaje-status.enum';
 import { PesajeItem } from '../domain/pesaje-item.vo';
+import { MaterialPrice } from 'src/modules/material/domain/material-price.vo';
 
 describe('ExportPesajesExcelUseCase', () => {
   let useCase: ExportPesajesExcelUseCase;
@@ -25,7 +26,7 @@ describe('ExportPesajesExcelUseCase', () => {
         new PesajeItem({
           materialId: 'mat-1',
           weight: 10,
-          pricePerKgAtMoment: 2,
+          pricePerKgAtMoment: MaterialPrice.create(2),
           material: { id: 'mat-1', name: 'Cartón' },
         }),
       ],
@@ -72,7 +73,7 @@ describe('ExportPesajesExcelUseCase', () => {
         new PesajeItem({
           materialId: 'mat-1',
           weight: 5,
-          pricePerKgAtMoment: 3,
+          pricePerKgAtMoment: MaterialPrice.create(3),
         }),
       ],
       date: new Date('2026-01-15'),

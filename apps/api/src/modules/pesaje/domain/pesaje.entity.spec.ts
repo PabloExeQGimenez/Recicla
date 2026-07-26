@@ -1,18 +1,19 @@
 import { Pesaje } from './pesaje.entity';
 import { PesajeStatus } from './pesaje-status.enum';
 import { PesajeItem } from './pesaje-item.vo';
+import { MaterialPrice } from 'src/modules/material/domain/material-price.vo';
 
 describe('Pesaje', () => {
   const item1 = new PesajeItem({
     materialId: 'mat-1',
     weight: 10,
-    pricePerKgAtMoment: 2,
+    pricePerKgAtMoment: MaterialPrice.create(2),
   });
 
   const item2 = new PesajeItem({
     materialId: 'mat-2',
     weight: 5,
-    pricePerKgAtMoment: 3,
+    pricePerKgAtMoment: MaterialPrice.create(3),
   });
 
   const defaultProps = {

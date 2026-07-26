@@ -32,7 +32,7 @@ describe('CreateMaterialUseCase', () => {
     const result = await useCase.execute({ name: 'Cartón', currentPrice: 2 });
 
     expect(result.name).toBe('Cartón');
-    expect(result.currentPrice).toBe(2);
+    expect(result.currentPrice.value).toBe(2);
     expect(result.active).toBe(true);
     expect(mockRepository.save).toHaveBeenCalled();
   });

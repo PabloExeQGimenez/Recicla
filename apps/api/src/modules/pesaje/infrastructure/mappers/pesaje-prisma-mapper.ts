@@ -2,6 +2,7 @@ import { Prisma } from '@prisma/client';
 import { Pesaje } from '../../domain/pesaje.entity';
 import { PesajeItem } from '../../domain/pesaje-item.vo';
 import { PesajeStatus } from '../../domain/pesaje-status.enum';
+import { MaterialPrice } from 'src/modules/material/domain/material-price.vo';
 
 type PrismaPesajeWithRelations = Prisma.PesajeGetPayload<{
   include: {
@@ -35,7 +36,7 @@ export class PesajePrismaMapper {
             id: item.id,
             materialId: item.materialId,
             weight: item.weight.toNumber(),
-            pricePerKgAtMoment: item.pricePerKgAtMoment.toNumber(),
+            pricePerKgAtMoment: MaterialPrice.create(item.pricePerKgAtMoment.toNumber()),
             material: {
               id: item.material.id,
               name: item.material.name,

@@ -1,6 +1,7 @@
 import { GetMaterialByIdUseCase } from './get-material-by-id.usecase';
 import { MaterialRepository } from '../domain/material.repository';
 import { Material } from '../domain/material.entity';
+import { MaterialPrice } from '../domain/material-price.vo';
 import { NotFoundException } from '@nestjs/common';
 
 describe('GetMaterialByIdUseCase', () => {
@@ -22,10 +23,10 @@ describe('GetMaterialByIdUseCase', () => {
   });
 
   it('debería retornar el material si existe', async () => {
-    const material = new Material({
+    const material = Material.reconstitute({
       id: 'm-1',
       name: 'Cartón',
-      currentPrice: 2,
+      currentPrice: MaterialPrice.create(2),
       active: true,
       createdAt: new Date(),
       updatedAt: new Date(),

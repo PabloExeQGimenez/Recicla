@@ -1,12 +1,21 @@
 import { DeleteSolicitudPagoUseCase } from './delete-solicitud-pago.usecase';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { SolicitudPagoRepository } from '../domain/solicitud-pago.repository';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeRepository } from '../../pesaje/domain/pesaje.repository';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { SolicitudPago } from '../domain/solicitud-pago.entity';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { SolicitudPagoStatus } from '../domain/solicitud-pago-status.enum';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { Pesaje } from '../../pesaje/domain/pesaje.entity';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeStatus } from '../../pesaje/domain/pesaje-status.enum';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { PesajeItem } from '../../pesaje/domain/pesaje-item.vo';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 import { NotFoundException, BadRequestException } from '@nestjs/common';
+import { MaterialPrice } from "src/modules/material/domain/material-price.vo";
 
 describe('DeleteSolicitudPagoUseCase', () => {
   let useCase: DeleteSolicitudPagoUseCase;
@@ -22,7 +31,7 @@ describe('DeleteSolicitudPagoUseCase', () => {
         new PesajeItem({
           materialId: 'mat-1',
           weight: 10,
-          pricePerKgAtMoment: 2,
+          pricePerKgAtMoment: MaterialPrice.create(2),
         }),
       ],
       date: new Date(),

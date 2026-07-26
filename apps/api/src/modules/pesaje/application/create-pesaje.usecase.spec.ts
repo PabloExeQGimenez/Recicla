@@ -4,6 +4,7 @@ import { RecuperadorRepository } from 'src/modules/recuperador/domain/recuperado
 import { MaterialRepository } from 'src/modules/material/domain/material.repository';
 import { Recuperador } from 'src/modules/recuperador/domain/recuperador.entity';
 import { Material } from 'src/modules/material/domain/material.entity';
+import { MaterialPrice } from 'src/modules/material/domain/material-price.vo';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 describe('CreatePesajeUseCase', () => {
@@ -21,10 +22,10 @@ describe('CreatePesajeUseCase', () => {
     updatedAt: new Date(),
   });
 
-  const material = new Material({
+  const material = Material.reconstitute({
     id: 'mat-1',
     name: 'Cartón',
-    currentPrice: 2.5,
+    currentPrice: MaterialPrice.create(2.5),
     active: true,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -120,10 +121,10 @@ describe('CreatePesajeUseCase', () => {
   });
 
   it('debería crear pesaje con múltiples items', async () => {
-    const material2 = new Material({
+    const material2 = Material.reconstitute({
       id: 'mat-2',
       name: 'Plástico',
-      currentPrice: 3,
+      currentPrice: MaterialPrice.create(3),
       active: true,
       createdAt: new Date(),
       updatedAt: new Date(),

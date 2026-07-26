@@ -21,6 +21,7 @@ import {
 import { CreatePesajeDTO } from '../presentation/schemas/create-pesaje.schema';
 import { PesajeItem } from '../domain/pesaje-item.vo';
 import { PesajeStatus } from '../domain/pesaje-status.enum';
+import { MaterialPrice } from 'src/modules/material/domain/material-price.vo';
 
 @Injectable()
 export class CreatePesajeUseCase {
@@ -57,7 +58,7 @@ export class CreatePesajeUseCase {
         new PesajeItem({
           materialId: material.id,
           weight: item.weight,
-          pricePerKgAtMoment: material.currentPrice,
+          pricePerKgAtMoment: MaterialPrice.create(material.currentPrice.value),
         }),
       );
     }
