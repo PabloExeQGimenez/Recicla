@@ -23,7 +23,7 @@ describe('ExportPesajesPdfUseCase', () => {
   });
 
   it('debería buscar todos los pesajes y generar el pdf', async () => {
-    const pesaje = new Pesaje({
+    const pesaje = Pesaje.reconstitute({
       id: 'p-1',
       recuperadorId: 'rec-1',
       status: PesajeStatus.PENDING,

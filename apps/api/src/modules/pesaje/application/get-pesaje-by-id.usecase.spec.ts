@@ -28,7 +28,7 @@ describe('GetPesajeByIdUseCase', () => {
   });
 
   it('debería retornar el pesaje si existe', async () => {
-    const pesaje = new Pesaje({
+    const pesaje = Pesaje.reconstitute({
       id: 'p-1',
       recuperadorId: 'rec-1',
       status: PesajeStatus.PENDING,

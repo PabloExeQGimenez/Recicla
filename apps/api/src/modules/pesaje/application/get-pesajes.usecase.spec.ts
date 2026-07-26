@@ -24,7 +24,7 @@ describe('GetPesajesUseCase', () => {
 
   it('debería retornar pesajes paginados', async () => {
     const pesajes = [
-      new Pesaje({
+      Pesaje.reconstitute({
         id: 'p-1',
         recuperadorId: 'rec-1',
         status: PesajeStatus.PENDING,

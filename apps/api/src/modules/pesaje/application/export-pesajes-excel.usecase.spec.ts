@@ -18,7 +18,7 @@ describe('ExportPesajesExcelUseCase', () => {
   });
 
   it('debería buscar todos los pesajes y generar el excel', async () => {
-    const pesaje = new Pesaje({
+    const pesaje = Pesaje.reconstitute({
       id: 'p-1',
       recuperadorId: 'rec-1',
       status: PesajeStatus.PENDING,
@@ -65,7 +65,7 @@ describe('ExportPesajesExcelUseCase', () => {
   });
 
   it('debería manejar pesajes sin recuperador', async () => {
-    const pesaje = new Pesaje({
+    const pesaje = Pesaje.reconstitute({
       id: 'p-1',
       recuperadorId: 'rec-1',
       status: PesajeStatus.PENDING,

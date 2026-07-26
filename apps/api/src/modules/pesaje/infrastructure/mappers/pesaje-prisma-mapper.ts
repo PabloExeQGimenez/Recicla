@@ -17,7 +17,7 @@ type PrismaPesajeWithRelations = Prisma.PesajeGetPayload<{
 
 export class PesajePrismaMapper {
   static toDomain(pesaje: PrismaPesajeWithRelations): Pesaje {
-    return new Pesaje({
+    return Pesaje.reconstitute({
       id: pesaje.id,
       recuperadorId: pesaje.recuperadorId,
       status: pesaje.status as PesajeStatus,

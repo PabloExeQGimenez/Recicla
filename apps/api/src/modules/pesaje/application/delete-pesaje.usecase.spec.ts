@@ -32,7 +32,7 @@ describe('DeletePesajeUseCase', () => {
   });
 
   it('debería lanzar BadRequestException si el pesaje no se puede eliminar', async () => {
-    const pesaje = new Pesaje({
+    const pesaje = Pesaje.reconstitute({
       id: 'p-1',
       recuperadorId: 'rec-1',
       status: PesajeStatus.PAYMENT_REQUESTED,
@@ -57,7 +57,7 @@ describe('DeletePesajeUseCase', () => {
   });
 
   it('debería eliminar el pesaje correctamente', async () => {
-    const pesaje = new Pesaje({
+    const pesaje = Pesaje.reconstitute({
       id: 'p-1',
       recuperadorId: 'rec-1',
       status: PesajeStatus.PENDING,
