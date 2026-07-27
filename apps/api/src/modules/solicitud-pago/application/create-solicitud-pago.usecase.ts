@@ -14,7 +14,6 @@ import {
   type PesajeRepository,
 } from 'src/modules/pesaje/domain/pesaje.repository';
 import { CreateSolicitudPagoDTO } from './dtos/create-solicitud-pago.dto';
-import { SolicitudPagoStatus } from '../domain/solicitud-pago-status.enum';
 
 @Injectable()
 export class CreateSolicitudPagoUseCase {
@@ -41,12 +40,9 @@ export class CreateSolicitudPagoUseCase {
       throw new BadRequestException('No hay pesajes pendientes de pago');
     }
 
-    const solicitudPago = new SolicitudPago({
-      id: crypto.randomUUID(),
+    const solicitudPago = SolicitudPago.create({
       from: data.from,
       to: data.to,
-      status: SolicitudPagoStatus.PAYMENT_REQUESTED,
-      createdAt: new Date(),
     });
     await this.solicitudPagoRepository.save(solicitudPago);
 

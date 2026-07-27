@@ -10,24 +10,40 @@ describe('SolicitudPago', () => {
     createdAt: new Date('2026-01-01'),
   };
 
-  it('debería crear una solicitud válida', () => {
-    const solicitud = new SolicitudPago(defaultProps);
+  const creationProps = {
+    from: new Date('2026-01-01'),
+    to: new Date('2026-01-31'),
+  };
 
-    expect(solicitud.id).toBe('sp-1');
-    expect(solicitud.status).toBe(SolicitudPagoStatus.PAYMENT_REQUESTED);
+  describe('constructor', () => {
+    it('debería crear una solicitud válida', () => {
+      const solicitud = SolicitudPago.reconstitute(defaultProps);
+
+      expect(solicitud.id).toBe('sp-1');
+      expect(solicitud.status).toBe(SolicitudPagoStatus.PAYMENT_REQUESTED);
+    });
+
+    it('debería crear solicitud sin pesajes', () => {
+      const solicitud = SolicitudPago.reconstitute(defaultProps);
+
+      expect(solicitud.pesajes).toEqual([]);
+    });
   });
 
-  it('debería crear solicitud sin pesajes', () => {
-    const solicitud = new SolicitudPago(defaultProps);
+  describe('create', () => {
+    it('debería crear una solicitud con valores por defecto', () => {
+      const solicitud = SolicitudPago.create(creationProps);
 
-    expect(solicitud.pesajes).toEqual([]);
-  });
+      expect(solicitud.id).toBeDefined();
+      expect(solicitud.from).toEqual(new Date('2026-01-01'));
+      expect(solicitud.to).toEqual(new Date('2026-01-31'));
+      expect(solicitud.status).toBe(SolicitudPagoStatus.PAYMENT_REQUESTED);
+      expect(solicitud.pesajes).toEqual([]);
+    });
 
-  describe('validaciones del constructor', () => {
     it('debería lanzar error si from > to', () => {
       expect(() => {
-        new SolicitudPago({
-          ...defaultProps,
+        SolicitudPago.create({
           from: new Date('2026-02-01'),
           to: new Date('2026-01-01'),
         });
@@ -37,14 +53,14 @@ describe('SolicitudPago', () => {
 
   describe('markAsPaid', () => {
     it('debería marcar como pagada', () => {
-      const solicitud = new SolicitudPago(defaultProps);
+      const solicitud = SolicitudPago.reconstitute({ ...defaultProps });
       solicitud.markAsPaid();
 
       expect(solicitud.status).toBe(SolicitudPagoStatus.PAID);
     });
 
     it('debería lanzar error si ya está pagada', () => {
-      const solicitud = new SolicitudPago({
+      const solicitud = SolicitudPago.reconstitute({
         ...defaultProps,
         status: SolicitudPagoStatus.PAID,
       });

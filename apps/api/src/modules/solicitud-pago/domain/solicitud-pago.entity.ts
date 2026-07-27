@@ -10,30 +10,60 @@ export type SolicitudPagoProps = {
   pesajes?: Pesaje[];
 };
 
-export class SolicitudPago {
-  readonly id: string;
-  readonly from: Date;
-  readonly to: Date;
-  status: SolicitudPagoStatus;
-  readonly createdAt: Date;
-  readonly pesajes: Pesaje[];
+export type SolicitudPagoCreationProps = {
+  from: Date;
+  to: Date;
+};
 
-  constructor(props: SolicitudPagoProps) {
+export class SolicitudPago {
+  private constructor(private props: SolicitudPagoProps) {}
+
+  static create(props: SolicitudPagoCreationProps): SolicitudPago {
     if (props.from > props.to) {
       throw new Error('Rango de fechas inválido');
     }
-    this.id = props.id;
-    this.from = props.from;
-    this.to = props.to;
-    this.status = props.status;
-    this.createdAt = props.createdAt;
-    this.pesajes = props.pesajes ?? [];
+
+    return new SolicitudPago({
+      id: crypto.randomUUID(),
+      from: props.from,
+      to: props.to,
+      status: SolicitudPagoStatus.PAYMENT_REQUESTED,
+      createdAt: new Date(),
+    });
+  }
+
+  static reconstitute(props: SolicitudPagoProps): SolicitudPago {
+    return new SolicitudPago(props);
+  }
+
+  get id(): string {
+    return this.props.id;
+  }
+
+  get from(): Date {
+    return this.props.from;
+  }
+
+  get to(): Date {
+    return this.props.to;
+  }
+
+  get status(): SolicitudPagoStatus {
+    return this.props.status;
+  }
+
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
+  get pesajes(): Pesaje[] {
+    return this.props.pesajes ?? [];
   }
 
   markAsPaid(): void {
-    if (this.status === SolicitudPagoStatus.PAID) {
+    if (this.props.status === SolicitudPagoStatus.PAID) {
       throw new Error('La solicitud ya fue pagada');
     }
-    this.status = SolicitudPagoStatus.PAID;
+    this.props.status = SolicitudPagoStatus.PAID;
   }
 }

@@ -57,7 +57,7 @@ describe('ExcludePesajesFromSolicitudPagoUseCase', () => {
   });
 
   it('debería lanzar BadRequestException si el estado no es PAYMENT_REQUESTED', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),
@@ -76,7 +76,7 @@ describe('ExcludePesajesFromSolicitudPagoUseCase', () => {
   });
 
   it('debería lanzar BadRequestException si los pesajes no pertenecen a la solicitud', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),
@@ -95,7 +95,7 @@ describe('ExcludePesajesFromSolicitudPagoUseCase', () => {
   });
 
   it('debería eliminar la solicitud si se excluyen todos los pesajes', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),
@@ -118,7 +118,7 @@ describe('ExcludePesajesFromSolicitudPagoUseCase', () => {
   });
 
   it('debería retornar la solicitud actualizada si quedan pesajes', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),
@@ -127,7 +127,7 @@ describe('ExcludePesajesFromSolicitudPagoUseCase', () => {
       pesajes: [makePesaje('p-1'), makePesaje('p-2')],
     });
 
-    const updatedSolicitud = new SolicitudPago({
+    const updatedSolicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),

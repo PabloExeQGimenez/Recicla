@@ -23,7 +23,7 @@ describe('GetSolicitudPagoByIdUseCase', () => {
   });
 
   it('debería retornar la solicitud si existe', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),

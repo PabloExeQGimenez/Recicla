@@ -30,7 +30,7 @@ export class SolicitudPagoPrismaMapper {
   }
 
   static toDomain(solicitudPago: SolicitudPagoWithPesajes): SolicitudPago {
-    return new SolicitudPago({
+    return SolicitudPago.reconstitute({
       id: solicitudPago.id,
       from: solicitudPago.from,
       to: solicitudPago.to,

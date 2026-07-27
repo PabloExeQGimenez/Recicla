@@ -52,7 +52,7 @@ describe('DeleteSolicitudPagoUseCase', () => {
   });
 
   it('debería lanzar BadRequestException si la solicitud ya fue pagada', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),
@@ -70,7 +70,7 @@ describe('DeleteSolicitudPagoUseCase', () => {
   });
 
   it('debería desasociar pesajes y eliminar la solicitud', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),
