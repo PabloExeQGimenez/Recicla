@@ -22,7 +22,7 @@ describe('SolicitudPagoController', () => {
     delete: jest.Mocked<DeleteSolicitudPagoUseCase>;
   };
 
-  const solicitud = new SolicitudPago({
+  const solicitud = SolicitudPago.reconstitute({
     id: 'sp-1',
     from: new Date('2026-01-01'),
     to: new Date('2026-01-31'),
@@ -116,7 +116,7 @@ describe('SolicitudPagoController', () => {
 
   describe('markAsPaid', () => {
     it('debería marcar la solicitud como pagada', async () => {
-      const paid = new SolicitudPago({
+      const paid = SolicitudPago.reconstitute({
         id: 'sp-1',
         from: new Date('2026-01-01'),
         to: new Date('2026-01-31'),

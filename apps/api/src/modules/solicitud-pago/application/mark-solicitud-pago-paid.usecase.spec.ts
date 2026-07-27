@@ -61,7 +61,7 @@ describe('MarkSolicitudPagoPaidUseCase', () => {
   });
 
   it('debería lanzar BadRequestException si todos los pesajes son excluidos', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),
@@ -80,7 +80,7 @@ describe('MarkSolicitudPagoPaidUseCase', () => {
   });
 
   it('debería marcar como pagada sin exclusiones', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),
@@ -101,7 +101,7 @@ describe('MarkSolicitudPagoPaidUseCase', () => {
   });
 
   it('debería excluir pesajes y marcar el resto como pagados', async () => {
-    const solicitud = new SolicitudPago({
+    const solicitud = SolicitudPago.reconstitute({
       id: 'sp-1',
       from: new Date('2026-01-01'),
       to: new Date('2026-01-31'),
