@@ -55,9 +55,6 @@ const Card = styled.section<{ $accentColor?: string }>`
   border-radius: ${({ theme }) => theme.radius.lg};
   box-shadow: ${({ theme }) => theme.shadows.sm};
   overflow: visible;
-  ${({ $accentColor }) =>
-    $accentColor &&
-    `border-top: 3px solid ${$accentColor};`}
 `;
 
 const Header = styled.header`

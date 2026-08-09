@@ -6,7 +6,6 @@ export const Card = styled.section`
   border-radius: ${({ theme }) => theme.radius.lg};
   box-shadow: ${({ theme }) => theme.shadows.sm};
   padding: ${({ theme }) => theme.spacing(3)};
-  border-top: 3px solid ${({ theme }) => theme.colors.brand.secondary};
 `;
 
 export const TitleRow = styled.div`

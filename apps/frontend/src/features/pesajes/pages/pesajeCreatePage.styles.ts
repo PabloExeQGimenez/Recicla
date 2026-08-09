@@ -21,8 +21,7 @@ export const CargaPanel = styled.div<{ $active: boolean }>`
     rgba(16, 185, 129, 0.03) 60%,
     rgba(255, 255, 255, 0) 100%
   );
-  box-shadow: inset 4px 0 0 rgba(16, 185, 129, 0.85),
-    0 10px 28px rgba(16, 185, 129, 0.1), 0 6px 18px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 28px rgba(16, 185, 129, 0.1), 0 6px 18px rgba(0, 0, 0, 0.04);
   transition: all 180ms ease;
   border: 1px solid
     ${({ $active }) =>
@@ -32,8 +31,7 @@ export const CargaPanel = styled.div<{ $active: boolean }>`
   ${({ $active }) =>
     $active &&
     `
-    box-shadow: inset 4px 0 0 rgba(16,185,129,0.95),
-      0 16px 40px rgba(16,185,129,0.18), 0 10px 26px rgba(0,0,0,0.06);
+    box-shadow: 0 16px 40px rgba(16,185,129,0.18), 0 10px 26px rgba(0,0,0,0.06);
     transform: translateY(-1px);
   `}
 `;
