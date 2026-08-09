@@ -170,7 +170,7 @@ export const apiFetchBlob = async (
 
     if (err instanceof Error && err.name === "AbortError") {
       const timeoutError: ApiError = new Error(
-        "La solicitud tardó demasiado",
+        "La solicitud tardó demasiado, Esperar un minuto y recargar la el sitio",
       ) as ApiError;
       timeoutError.statusCode = 408;
       throw timeoutError;
